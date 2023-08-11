@@ -1,0 +1,18 @@
+{
+  "name": "workongridassignment",
+  "version": "1.0.0",
+  "description": "restful api's to get user details",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nirbhay",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "body-parser": "^1.20.2",
+    "express.js": "^1.0.0",
+    "mongoose": "^7.4.2",
+    "nodemon": "^3.0.1"
+  }
+}
