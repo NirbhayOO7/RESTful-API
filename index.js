@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 const axios = require('axios');
 const port = 8000;
 
@@ -44,7 +43,6 @@ app.get('/api/users', async (req, res) => {
     const users = await User.find({ first_name: { $regex: '^' + first_name } });
   
     if (users.length > 0) {
-        console.log("User",users);
       return res.json({ users });
     }
   
@@ -53,17 +51,11 @@ app.get('/api/users', async (req, res) => {
     try {
       const response = await axios.get(dummyUrl);
       const dummyUsers = await response.data;
-      // console.log(typeof(dummyUsers));
 
-      // Save dummy users to the MongoDB collection
-      // for(let i=0; i<1; i++){
-      //   await User.insertMany(dummyUsers[i]);
-      //   console.log(dummyUsers[i]);
-      // }
       const users = dummyUsers.users;
-      // console.log(users);
+
       for(let k in users){
-        // console.log(`user at index ${k}: ${users[k].firstName}`);
+
         await User.insertMany({
           first_name: users[k].firstName,
           last_name: users[k].lastName,
@@ -74,22 +66,11 @@ app.get('/api/users', async (req, res) => {
           birth_date: users[k].birthDate
         });
       }
-
-      // await User.insertMany(dummyUsers.users);
-      
-      // await User.save();
-      // console.log("DummyUser:",dummyUsers.users);
-      return res.json(dummyUsers);
     } catch (error) {
         console.log("Error fetching dummy users", error);
       return res.status(500).json({ error: 'Failed to fetch dummy users' });
     }
   });
-
-// app.get('/',function(req, res){
-//     console.log('request recived');
-//     return res.redirect("https://dummyjson.com/users/search?q=first_name");
-// });
 
 app.listen(port, function(err){
     if(err){
